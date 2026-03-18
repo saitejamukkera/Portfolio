@@ -2,12 +2,14 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import Send from 'lucide-react/dist/esm/icons/send'
-import CheckCircle from 'lucide-react/dist/esm/icons/check-circle'
-import AlertCircle from 'lucide-react/dist/esm/icons/alert-circle'
-import Loader2 from 'lucide-react/dist/esm/icons/loader-2'
-import BookOpen from 'lucide-react/dist/esm/icons/book-open'
-import LogOut from 'lucide-react/dist/esm/icons/log-out'
+import {
+  Send,
+  CheckCircle,
+  AlertCircle,
+  Loader2,
+  BookOpen,
+  LogOut,
+} from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaGithub, FaGoogle } from 'react-icons/fa'
 
@@ -88,7 +90,6 @@ function formatDate(dateStr: string) {
     year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined,
   })
 }
-
 
 export function Guestbook() {
   const [entries, setEntries] = useState<GuestbookEntry[]>([])
@@ -455,48 +456,48 @@ export function Guestbook() {
                     : 'border-border/50 hover:border-border dark:bg-card/20 dark:hover:bg-card/40 bg-white/50'
                 }`}
               >
-                  <div
-                    className={`absolute inset-0 bg-linear-to-br via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
-                      isAdmin ? 'from-primary/10' : 'from-primary/5'
-                    }`}
-                  />
+                <div
+                  className={`absolute inset-0 bg-linear-to-br via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
+                    isAdmin ? 'from-primary/10' : 'from-primary/5'
+                  }`}
+                />
 
-                  <div className="relative flex items-start gap-3.5">
-                    <Avatar
-                      className={`h-10 w-10 shrink-0 border ${isAdmin ? 'border-primary/40 ring-primary/20 ring-2' : 'border-border/30'}`}
+                <div className="relative flex items-start gap-3.5">
+                  <Avatar
+                    className={`h-10 w-10 shrink-0 border ${isAdmin ? 'border-primary/40 ring-primary/20 ring-2' : 'border-border/30'}`}
+                  >
+                    {entry.avatar_url && (
+                      <AvatarImage
+                        src={entry.avatar_url}
+                        alt={entry.user_name}
+                      />
+                    )}
+                    <AvatarFallback
+                      className={`bg-linear-to-br ${getAvatarGradient(entry.user_name)} text-xs font-bold text-white`}
                     >
-                      {entry.avatar_url && (
-                        <AvatarImage
-                          src={entry.avatar_url}
-                          alt={entry.user_name}
-                        />
-                      )}
-                      <AvatarFallback
-                        className={`bg-linear-to-br ${getAvatarGradient(entry.user_name)} text-xs font-bold text-white`}
-                      >
-                        {getInitials(entry.user_name)}
-                      </AvatarFallback>
-                    </Avatar>
+                      {getInitials(entry.user_name)}
+                    </AvatarFallback>
+                  </Avatar>
 
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="truncate text-sm font-semibold">
-                          {entry.user_name}
-                        </span>
-                        {isAdmin && (
-                          <Badge className="border-primary/30 bg-primary/10 text-primary hover:bg-primary/10 px-2 py-0 text-[10px] font-bold tracking-wide uppercase">
-                            Admin
-                          </Badge>
-                        )}
-                        <span className="text-muted-foreground/50 shrink-0 text-xs">
-                          {formatDate(entry.created_at)}
-                        </span>
-                      </div>
-                      <p className="text-muted-foreground mt-1.5 text-sm leading-relaxed">
-                        {entry.message}
-                      </p>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="truncate text-sm font-semibold">
+                        {entry.user_name}
+                      </span>
+                      {isAdmin && (
+                        <Badge className="border-primary/30 bg-primary/10 text-primary hover:bg-primary/10 px-2 py-0 text-[10px] font-bold tracking-wide uppercase">
+                          Admin
+                        </Badge>
+                      )}
+                      <span className="text-muted-foreground/50 shrink-0 text-xs">
+                        {formatDate(entry.created_at)}
+                      </span>
                     </div>
+                    <p className="text-muted-foreground mt-1.5 text-sm leading-relaxed">
+                      {entry.message}
+                    </p>
                   </div>
+                </div>
               </div>
             )
           })}

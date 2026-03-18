@@ -1,5 +1,4 @@
-import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right'
-import Download from 'lucide-react/dist/esm/icons/download'
+import { ArrowRight, Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { RESUME } from '@/data/resume'
 import profilePhoto from '@/assets/profile_photo.webp'

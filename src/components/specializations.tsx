@@ -57,7 +57,7 @@ const cardVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
 }
 
@@ -105,9 +105,7 @@ export function Specializations() {
               >
                 <div className="from-primary/5 absolute inset-0 bg-linear-to-br via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <div className="relative space-y-3">
-                  <div
-                    className={`${spec.bg} inline-flex rounded-xl p-2.5`}
-                  >
+                  <div className={`${spec.bg} inline-flex rounded-xl p-2.5`}>
                     <Icon className={`h-5 w-5 ${spec.color}`} />
                   </div>
                   <h3 className="text-lg font-semibold tracking-tight">

@@ -1,7 +1,4 @@
-import Github from 'lucide-react/dist/esm/icons/github'
-import Globe from 'lucide-react/dist/esm/icons/globe'
-import ExternalLink from 'lucide-react/dist/esm/icons/external-link'
-import ArrowUpRight from 'lucide-react/dist/esm/icons/arrow-up-right'
+import { Github, Globe, ExternalLink, ArrowUpRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'

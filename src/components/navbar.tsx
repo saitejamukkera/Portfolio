@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import Menu from 'lucide-react/dist/esm/icons/menu'
-import X from 'lucide-react/dist/esm/icons/x'
-import Home from 'lucide-react/dist/esm/icons/home'
-import Github from 'lucide-react/dist/esm/icons/github'
+import { Menu, X, Home, Github } from 'lucide-react'
 import { ModeToggle } from '@/components/mode-toggle'
 import { cn } from '@/lib/utils'
 import { MovingBorder } from '@/components/ui/moving-border'
@@ -198,9 +195,7 @@ export function Navbar() {
 
               {/* Mobile Menu Toggle */}
               <button
-                onClick={() =>
-                  setIsMobileMenuOpen((current) => !current)
-                }
+                onClick={() => setIsMobileMenuOpen((current) => !current)}
                 className="rounded-full p-2 transition-colors hover:bg-gray-100 md:hidden dark:hover:bg-white/10"
                 aria-label="Toggle menu"
               >

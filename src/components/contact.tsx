@@ -2,11 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import Mail from 'lucide-react/dist/esm/icons/mail'
-import Send from 'lucide-react/dist/esm/icons/send'
-import CheckCircle from 'lucide-react/dist/esm/icons/check-circle'
-import AlertCircle from 'lucide-react/dist/esm/icons/alert-circle'
-import Loader2 from 'lucide-react/dist/esm/icons/loader-2'
+import { Mail, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
 import emailjs from '@emailjs/browser'
 import { motion } from 'framer-motion'
 
@@ -207,7 +203,7 @@ export function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-              <div className="border-border bg-card dark:border-border/50 dark:bg-card/50 relative overflow-hidden rounded-2xl border p-4 shadow-lg md:p-8">
+            <div className="border-border bg-card dark:border-border/50 dark:bg-card/50 relative overflow-hidden rounded-2xl border p-4 shadow-lg md:p-8">
               {/* Gradient accent */}
               <div className="from-primary/10 via-primary/5 absolute inset-0 bg-linear-to-br to-transparent" />
 
