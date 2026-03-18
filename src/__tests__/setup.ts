@@ -1,4 +1,10 @@
-import '@testing-library/jest-dom/vitest'
+import * as matchers from '@testing-library/jest-dom/matchers'
+import { expect } from 'vitest'
+
+console.log('[SETUP] Running setup file, matchers keys:', Object.keys(matchers).length)
+console.log('[SETUP] expect.extend type:', typeof expect.extend)
+expect.extend(matchers)
+console.log('[SETUP] After extend, toBeInTheDocument:', typeof (expect(null) as any).toBeInTheDocument)
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

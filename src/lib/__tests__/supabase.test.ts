@@ -1,5 +1,16 @@
-import { getUserMeta, signInWithProvider, signOut, supabase } from '../supabase'
-import type { User } from '../supabase'
+const mockAuth = {
+  signInWithOAuth: vi.fn(),
+  signOut: vi.fn(),
+  getSession: vi.fn(),
+  onAuthStateChange: vi.fn(),
+}
+
+vi.mock('@supabase/supabase-js', () => ({
+  createClient: () => ({ auth: mockAuth, from: vi.fn() }),
+}))
+
+const { getUserMeta, signInWithProvider, signOut, supabase } = await import('../supabase')
+type User = import('../supabase').User
 
 describe('supabase client', () => {
   it('exports a supabase client object', () => {
@@ -9,48 +20,46 @@ describe('supabase client', () => {
 })
 
 describe('signInWithProvider', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
   it('calls supabase.auth.signInWithOAuth with github', async () => {
-    const spy = vi.spyOn(supabase.auth, 'signInWithOAuth').mockResolvedValue({
+    mockAuth.signInWithOAuth.mockResolvedValue({
       data: { provider: 'github', url: 'https://github.com/login' },
       error: null,
     })
 
     await signInWithProvider('github')
 
-    expect(spy).toHaveBeenCalledWith({
+    expect(mockAuth.signInWithOAuth).toHaveBeenCalledWith({
       provider: 'github',
       options: { redirectTo: expect.stringContaining('/guestbook') },
     })
-
-    spy.mockRestore()
   })
 
   it('calls supabase.auth.signInWithOAuth with google', async () => {
-    const spy = vi.spyOn(supabase.auth, 'signInWithOAuth').mockResolvedValue({
+    mockAuth.signInWithOAuth.mockResolvedValue({
       data: { provider: 'google', url: 'https://accounts.google.com' },
       error: null,
     })
 
     await signInWithProvider('google')
 
-    expect(spy).toHaveBeenCalledWith({
+    expect(mockAuth.signInWithOAuth).toHaveBeenCalledWith({
       provider: 'google',
       options: { redirectTo: expect.stringContaining('/guestbook') },
     })
-
-    spy.mockRestore()
   })
 })
 
 describe('signOut', () => {
   it('calls supabase.auth.signOut', async () => {
-    const spy = vi.spyOn(supabase.auth, 'signOut').mockResolvedValue({ error: null })
+    mockAuth.signOut.mockResolvedValue({ error: null })
 
     await signOut()
 
-    expect(spy).toHaveBeenCalled()
-
-    spy.mockRestore()
+    expect(mockAuth.signOut).toHaveBeenCalled()
   })
 })
 
