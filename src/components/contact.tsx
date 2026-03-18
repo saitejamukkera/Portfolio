@@ -2,7 +2,11 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Mail, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
+import Mail from 'lucide-react/dist/esm/icons/mail'
+import Send from 'lucide-react/dist/esm/icons/send'
+import CheckCircle from 'lucide-react/dist/esm/icons/check-circle'
+import AlertCircle from 'lucide-react/dist/esm/icons/alert-circle'
+import Loader2 from 'lucide-react/dist/esm/icons/loader-2'
 import emailjs from '@emailjs/browser'
 import { motion } from 'framer-motion'
 
@@ -32,10 +36,9 @@ import {
   twitterLink,
 } from '@/lib/static-links'
 
-// EmailJS Configuration
-const EMAILJS_SERVICE_ID = 'service_qmcm8i1'
-const EMAILJS_TEMPLATE_ID = 'template_3wijjkp'
-const EMAILJS_PUBLIC_KEY = 'BLam_YpahfTIJg5Oe'
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -85,7 +88,7 @@ export function Contact() {
       // Reset status after 5 seconds
       setTimeout(() => setSubmitStatus('idle'), 5000)
     } catch (error) {
-      console.error('EmailJS Error:', error)
+      if (import.meta.env.DEV) console.error('EmailJS Error:', error)
       setSubmitStatus('error')
 
       // Reset status after 5 seconds
@@ -136,11 +139,11 @@ export function Contact() {
           className="space-y-4"
         >
           <div className="flex items-center gap-3">
-            <div className="via-foreground/20 h-px flex-1 bg-gradient-to-r from-transparent to-transparent" />
+            <div className="via-foreground/20 h-px flex-1 bg-linear-to-r from-transparent to-transparent" />
             <span className="text-muted-foreground text-sm font-medium tracking-widest uppercase">
               Get In Touch
             </span>
-            <div className="via-foreground/20 h-px flex-1 bg-gradient-to-r from-transparent to-transparent" />
+            <div className="via-foreground/20 h-px flex-1 bg-linear-to-r from-transparent to-transparent" />
           </div>
           <h2 className="text-center text-4xl font-bold tracking-tight sm:text-5xl">
             Contact
@@ -204,9 +207,9 @@ export function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="border-border bg-card dark:border-border/50 dark:bg-card/50 relative overflow-hidden rounded-2xl border p-4 shadow-lg md:p-8">
+              <div className="border-border bg-card dark:border-border/50 dark:bg-card/50 relative overflow-hidden rounded-2xl border p-4 shadow-lg md:p-8">
               {/* Gradient accent */}
-              <div className="from-primary/10 via-primary/5 absolute inset-0 bg-gradient-to-br to-transparent" />
+              <div className="from-primary/10 via-primary/5 absolute inset-0 bg-linear-to-br to-transparent" />
 
               <div className="relative">
                 <h3 className="mb-6 text-xl font-semibold">Send a Message</h3>

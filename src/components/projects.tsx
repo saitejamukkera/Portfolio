@@ -1,10 +1,15 @@
-import { Github, Globe, ExternalLink, ArrowUpRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import Github from 'lucide-react/dist/esm/icons/github'
+import Globe from 'lucide-react/dist/esm/icons/globe'
+import ExternalLink from 'lucide-react/dist/esm/icons/external-link'
+import ArrowUpRight from 'lucide-react/dist/esm/icons/arrow-up-right'
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { RESUME } from '@/data/resume'
+import { ThemedImage } from '@/components/themed-image'
 
-// Gradient color schemes for project thumbnails
 const gradientSchemes = [
   'from-violet-600 via-purple-500 to-fuchsia-500',
   'from-cyan-500 via-blue-500 to-indigo-600',
@@ -36,6 +41,8 @@ const cardVariants = {
   },
 }
 
+const featuredProjects = RESUME.projects.filter((p) => p.featured)
+
 export function Projects() {
   return (
     <section id="projects" className="py-16 md:py-32">
@@ -49,11 +56,11 @@ export function Projects() {
           className="space-y-4"
         >
           <div className="flex items-center gap-3">
-            <div className="via-foreground/20 h-px flex-1 bg-gradient-to-r from-transparent to-transparent" />
+            <div className="via-foreground/20 h-px flex-1 bg-linear-to-r from-transparent to-transparent" />
             <span className="text-muted-foreground text-sm font-medium tracking-widest uppercase">
               Featured Work
             </span>
-            <div className="via-foreground/20 h-px flex-1 bg-gradient-to-r from-transparent to-transparent" />
+            <div className="via-foreground/20 h-px flex-1 bg-linear-to-r from-transparent to-transparent" />
           </div>
           <h2 className="text-center text-4xl font-bold tracking-tight sm:text-5xl">
             Projects
@@ -64,7 +71,7 @@ export function Projects() {
           </p>
         </motion.div>
 
-        {/* Projects Grid */}
+        {/* Featured Projects Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -72,49 +79,36 @@ export function Projects() {
           viewport={{ once: true, margin: '-100px' }}
           className="flex flex-wrap justify-center gap-6"
         >
-          {RESUME.projects.map((project, index) => (
+          {featuredProjects.map((project, index) => (
             <motion.div
               key={index}
               variants={cardVariants}
-              className={`group relative w-full max-w-sm sm:w-[calc(50%-12px)] ${
-                RESUME.projects.length === 4
-                  ? 'lg:w-[calc(50%-12px)]'
-                  : 'lg:w-[calc(33.333%-16px)]'
-              }`}
+              className="group relative w-full max-w-sm sm:w-[calc(50%-12px)]"
             >
-              {/* Card Container */}
               <div className="border-border bg-card dark:border-border/50 dark:bg-card/30 hover:shadow-primary/5 dark:hover:bg-card/50 relative h-full overflow-hidden rounded-2xl border backdrop-blur-xl transition-all duration-500 hover:shadow-2xl">
-                {/* Thumbnail - Image or Animated Gradient */}
+                {/* Thumbnail */}
                 <div className="relative h-40 overflow-hidden">
-                  {project.image ? (
+                  {project.image !== null ? (
                     <>
-                      {/* Project Image */}
-                      <img
-                        src={project.image}
+                      <ThemedImage
+                        lightSrc={project.image.light}
+                        darkSrc={project.image.dark}
                         alt={project.title}
                         className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                       />
-                      {/* Subtle overlay for better contrast */}
                       <div className="absolute inset-0 bg-black/10 transition-opacity duration-300 group-hover:bg-black/5" />
                     </>
                   ) : (
                     <>
-                      {/* Base Gradient */}
                       <div
-                        className={`absolute inset-0 bg-gradient-to-br ${gradientSchemes[index % gradientSchemes.length]} opacity-80`}
+                        className={`absolute inset-0 bg-linear-to-br ${gradientSchemes[index % gradientSchemes.length]} opacity-80`}
                       />
-
-                      {/* Animated Shimmer Effect */}
-                      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 ease-in-out group-hover:translate-x-full" />
-
-                      {/* Floating Shapes Animation */}
+                      <div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 ease-in-out group-hover:translate-x-full" />
                       <div className="absolute inset-0 overflow-hidden">
                         <div className="absolute top-4 right-4 h-20 w-20 rounded-full bg-white/10 blur-xl transition-transform duration-700 group-hover:scale-150" />
                         <div className="absolute bottom-4 left-4 h-32 w-32 rounded-full bg-white/5 blur-2xl transition-transform delay-100 duration-500 group-hover:scale-125" />
                         <div className="absolute top-1/2 left-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-xl transition-transform duration-600 group-hover:scale-110" />
                       </div>
-
-                      {/* Grid Pattern Overlay */}
                       <div
                         className="absolute inset-0 opacity-20"
                         style={{
@@ -124,26 +118,19 @@ export function Projects() {
                       />
                     </>
                   )}
-
-                  {/* Hover Arrow Indicator */}
                   <div className="absolute top-4 right-4 translate-y-2 transform rounded-full bg-white/10 p-2 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                     <ArrowUpRight className="h-4 w-4 text-white" />
                   </div>
                 </div>
 
-                {/* Content Section */}
+                {/* Content */}
                 <div className="space-y-3 p-5">
-                  {/* Project Title */}
                   <h3 className="text-lg font-semibold tracking-tight">
                     {project.title}
                   </h3>
-
-                  {/* Description */}
                   <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
                     {project.description}
                   </p>
-
-                  {/* Tech Stack */}
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((t) => (
                       <Badge
@@ -155,8 +142,6 @@ export function Projects() {
                       </Badge>
                     ))}
                   </div>
-
-                  {/* Actions */}
                   <div className="flex items-center gap-3 pt-2">
                     {project.github && (
                       <Button
@@ -197,11 +182,31 @@ export function Projects() {
                   </div>
                 </div>
 
-                {/* Glow Effect on Hover */}
-                <div className="from-primary/20 absolute -inset-px -z-10 rounded-2xl bg-gradient-to-r via-purple-500/20 to-pink-500/20 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="from-primary/20 absolute -inset-px -z-10 rounded-2xl bg-linear-to-r via-purple-500/20 to-pink-500/20 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100" />
               </div>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* View More CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="flex justify-center pt-4"
+        >
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="group h-12 rounded-full px-8 text-base font-medium transition-all duration-300 hover:shadow-lg"
+          >
+            <Link to="/projects">
+              Want to see more projects?
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Button>
         </motion.div>
       </div>
     </section>

@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Home, Github } from 'lucide-react'
+import Menu from 'lucide-react/dist/esm/icons/menu'
+import X from 'lucide-react/dist/esm/icons/x'
+import Home from 'lucide-react/dist/esm/icons/home'
+import Github from 'lucide-react/dist/esm/icons/github'
 import { ModeToggle } from '@/components/mode-toggle'
 import { cn } from '@/lib/utils'
 import { MovingBorder } from '@/components/ui/moving-border'
@@ -34,7 +37,7 @@ export function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -63,7 +66,7 @@ export function Navbar() {
   }, [isMobileMenuOpen])
 
   const handleNavClick = (section: SectionKey) => {
-    setIsMobileMenuOpen(false)
+    setIsMobileMenuOpen(() => false)
     if (location.pathname !== '/') {
       navigate('/')
       // Wait for navigation then scroll
@@ -74,7 +77,7 @@ export function Navbar() {
   }
 
   const handleHomeClick = () => {
-    setIsMobileMenuOpen(false)
+    setIsMobileMenuOpen(() => false)
     if (location.pathname !== '/') {
       navigate('/')
     } else {
@@ -195,7 +198,9 @@ export function Navbar() {
 
               {/* Mobile Menu Toggle */}
               <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                onClick={() =>
+                  setIsMobileMenuOpen((current) => !current)
+                }
                 className="rounded-full p-2 transition-colors hover:bg-gray-100 md:hidden dark:hover:bg-white/10"
                 aria-label="Toggle menu"
               >

@@ -5,7 +5,15 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="./src/assets/logo.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://app.rybbit.io/api/script.js" data-site-id="8d0d99d347a6" defer></script>
+  <script>
+    (function() {
+      var t = localStorage.getItem('vite-ui-theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <script src="https://app.rybbit.io/api/script.js" data-site-id="8d0d99d347a6" defer integrity="sha384-z6p09jLYA1kj2iPwZ4Kk4FgYWYXbZy4vYalNnWiKTsf25s2n5tk8LM6PpsAYcflw" crossorigin="anonymous">
   <title>Sai Teja's Portfolio</title>
 </head>
 

@@ -1,92 +1,141 @@
 import { useState } from 'react'
 import {
   SiAmazonwebservices,
+  SiApachekafka,
   SiCss3,
   SiDocker,
   SiExpress,
   SiGit,
+  SiGithubactions,
   SiHtml5,
   SiJavascript,
+  SiJenkins,
+  SiKubernetes,
   SiMongodb,
+  SiMysql,
   SiNextdotjs,
   SiNodedotjs,
   SiPostgresql,
-  SiPrisma,
   SiPython,
   SiReact,
+  SiRedis,
+  SiSonarqube,
   SiSpringboot,
+  SiSpringsecurity,
   SiTailwindcss,
   SiTypescript,
 } from 'react-icons/si'
 import { FaJava } from 'react-icons/fa'
 import {
   LuCode,
-  LuLayers,
   LuServer,
-  LuWrench,
+  LuDatabase,
+  LuCloud,
+  LuTestTube,
+  LuLayers,
   LuLayoutGrid,
+  LuShieldCheck,
+  LuMessageSquare,
+  LuFlaskConical,
+  LuActivity,
+  LuArrowDownUp,
 } from 'react-icons/lu'
 import { RESUME } from '@/data/resume'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
-// Map skills to their icons and brand colors
 const skillsData: Record<string, { icon: React.ElementType; color: string }> = {
-  'Spring Boot': { icon: SiSpringboot, color: '#6DB33F' },
+  // Languages
   Java: { icon: FaJava, color: '#ED8B00' },
   JavaScript: { icon: SiJavascript, color: '#F7DF1E' },
   TypeScript: { icon: SiTypescript, color: '#3178C6' },
+  SQL: { icon: LuDatabase, color: '#4169E1' },
   Python: { icon: SiPython, color: '#4B8BBE' },
+  // Backend
+  'Spring Boot': { icon: SiSpringboot, color: '#6DB33F' },
+  'Spring Security': { icon: SiSpringsecurity, color: '#6DB33F' },
+  'Spring Data JPA': { icon: LuShieldCheck, color: '#6DB33F' },
+  'Node.js': { icon: SiNodedotjs, color: '#68A063' },
+  Express: { icon: SiExpress, color: '#FFFFFF' },
+  Redis: { icon: SiRedis, color: '#DC382D' },
+  // Data & Messaging
+  PostgreSQL: { icon: SiPostgresql, color: '#4169E1' },
+  MongoDB: { icon: SiMongodb, color: '#4DB33D' },
+  MySQL: { icon: SiMysql, color: '#4479A1' },
+  Flyway: { icon: LuArrowDownUp, color: '#CC0200' },
+  'Apache Kafka': { icon: SiApachekafka, color: '#231F20' },
+  'Amazon SQS': { icon: LuMessageSquare, color: '#FF9900' },
+  // Cloud & DevOps
+  AWS: { icon: SiAmazonwebservices, color: '#FF9900' },
+  Docker: { icon: SiDocker, color: '#2496ED' },
+  Kubernetes: { icon: SiKubernetes, color: '#326CE5' },
+  Git: { icon: SiGit, color: '#F05032' },
+  'GitHub Actions': { icon: SiGithubactions, color: '#2088FF' },
+  Jenkins: { icon: SiJenkins, color: '#D24939' },
+  SonarQube: { icon: SiSonarqube, color: '#4E9BCD' },
+  // Testing & Observability
+  'JUnit 5': { icon: LuTestTube, color: '#25A162' },
+  Mockito: { icon: LuFlaskConical, color: '#78A641' },
+  Splunk: { icon: LuActivity, color: '#000000' },
+  OpenTelemetry: { icon: LuActivity, color: '#F5A800' },
+  // Frontend
   React: { icon: SiReact, color: '#61DAFB' },
   'Next.js': { icon: SiNextdotjs, color: '#FFFFFF' },
   HTML5: { icon: SiHtml5, color: '#E34F26' },
   CSS3: { icon: SiCss3, color: '#1572B6' },
   'Tailwind CSS': { icon: SiTailwindcss, color: '#38BDF8' },
-  'Node.js': { icon: SiNodedotjs, color: '#68A063' },
-  Express: { icon: SiExpress, color: '#FFFFFF' },
-  PostgreSQL: { icon: SiPostgresql, color: '#4169E1' },
-  MongoDB: { icon: SiMongodb, color: '#4DB33D' },
-  'Prisma ORM': { icon: SiPrisma, color: '#2D3748' },
-  Git: { icon: SiGit, color: '#F05032' },
-  Docker: { icon: SiDocker, color: '#2496ED' },
-  AWS: { icon: SiAmazonwebservices, color: '#FF9900' },
 }
 
-type Category = 'all' | 'languages' | 'frontend' | 'backend' | 'tools'
+type Category = 'all' | 'languages' | 'backend' | 'data' | 'devops' | 'testing' | 'frontend'
 
 const categories: { id: Category; label: string; icon: React.ElementType }[] = [
   { id: 'all', label: 'All Skills', icon: LuLayoutGrid },
   { id: 'languages', label: 'Languages', icon: LuCode },
-  { id: 'frontend', label: 'Frontend', icon: LuLayers },
   { id: 'backend', label: 'Backend', icon: LuServer },
-  { id: 'tools', label: 'Tools', icon: LuWrench },
+  { id: 'data', label: 'Data & Messaging', icon: LuDatabase },
+  { id: 'devops', label: 'Cloud & DevOps', icon: LuCloud },
+  { id: 'testing', label: 'Testing & Observability', icon: LuTestTube },
+  { id: 'frontend', label: 'Frontend', icon: LuLayers },
 ]
+
+const prioritySkills = new Set(['Java', 'Spring Boot'])
+
+const allSkillsOrdered = (() => {
+  const skills = [
+    ...RESUME.skills.languages,
+    ...RESUME.skills.backend,
+    ...RESUME.skills.data,
+    ...RESUME.skills.devops,
+    ...RESUME.skills.testing,
+    ...RESUME.skills.frontend,
+  ]
+
+  const others = skills.filter((skill) => !prioritySkills.has(skill))
+  return ['Java', 'Spring Boot', ...others]
+})()
+
+const categoryCounts: Record<Category, number> = {
+  all: allSkillsOrdered.length,
+  languages: RESUME.skills.languages.length,
+  backend: RESUME.skills.backend.length,
+  data: RESUME.skills.data.length,
+  devops: RESUME.skills.devops.length,
+  testing: RESUME.skills.testing.length,
+  frontend: RESUME.skills.frontend.length,
+}
 
 export function Skills() {
   const [activeCategory, setActiveCategory] = useState<Category>('all')
 
   const getSkillsByCategory = (category: Category): string[] => {
     if (category === 'all') {
-      const skills = [
-        ...RESUME.skills.languages,
-        ...RESUME.skills.frontend,
-        ...RESUME.skills.backend,
-        ...RESUME.skills.tools,
-      ]
-
-      // Prioritize Java and Spring Boot
-      const prioritySkills = ['Java', 'Spring Boot']
-      const otherSkills = skills.filter(
-        (skill) => !prioritySkills.includes(skill)
-      )
-
-      return [...prioritySkills, ...otherSkills]
+      return allSkillsOrdered
     }
     return RESUME.skills[category] || []
   }
 
   const getCountByCategory = (category: Category): number => {
-    return getSkillsByCategory(category).length
+    return categoryCounts[category]
   }
 
   const currentSkills = getSkillsByCategory(activeCategory)

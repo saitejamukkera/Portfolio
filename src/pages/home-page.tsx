@@ -1,4 +1,5 @@
 import { Hero } from '@/components/hero'
+import { Specializations } from '@/components/specializations'
 import { Projects } from '@/components/projects'
 import { Skills } from '@/components/skills'
 import { Experience } from '@/components/experience'
@@ -13,6 +14,7 @@ export function HomePage() {
       <div ref={refs.hero}>
         <Hero />
       </div>
+      <Specializations />
       <div ref={refs.projects}>
         <Projects />
       </div>

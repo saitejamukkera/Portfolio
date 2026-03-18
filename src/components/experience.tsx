@@ -1,5 +1,6 @@
 import { RESUME } from '@/data/resume'
 import { LocationIcon } from '@/Icons/LocationIcon'
+import { motion } from 'framer-motion'
 
 export function Experience() {
   return (
@@ -10,26 +11,48 @@ export function Experience() {
         </h2>
         <div className="space-y-8">
           {RESUME.experience.map((exp, index) => (
-            <div
+            <motion.div
               key={index}
-              className="border-muted relative flex flex-col gap-2 border-l-2 pl-6 md:flex-row md:justify-between md:gap-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className="border-muted relative border-l-2 pl-6"
             >
               <div className="bg-background border-primary absolute top-0 -left-[9px] h-4 w-4 rounded-full border-2" />
-              <div className="flex flex-col space-y-1">
-                <h3 className="text-xl font-bold">{exp.role}</h3>
-                <p className="text-muted-foreground font-medium">
-                  {exp.company}
-                </p>
-              </div>
-              <div className="flex flex-col space-y-1 md:items-end">
-                <span className="text-muted-foreground text-sm tabular-nums">
-                  {exp.period}
-                </span>
-                <p className="text-muted-foreground/90 max-w-lg text-sm leading-relaxed md:text-right">
+
+              <div className="space-y-3">
+                <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold">{exp.role}</h3>
+                    <p className="text-muted-foreground font-medium">
+                      {exp.company}
+                    </p>
+                  </div>
+                  <span className="text-muted-foreground shrink-0 text-sm tabular-nums">
+                    {exp.period}
+                  </span>
+                </div>
+
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   {exp.description}
                 </p>
+
+                {exp.highlights && exp.highlights.length > 0 && (
+                  <ul className="space-y-1.5 pt-1">
+                    {exp.highlights.map((highlight, i) => (
+                      <li
+                        key={i}
+                        className="text-muted-foreground/90 flex items-start gap-2 text-sm leading-relaxed"
+                      >
+                        <span className="bg-primary/60 mt-2 h-1.5 w-1.5 shrink-0 rounded-full" />
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -44,11 +67,9 @@ export function Experience() {
               key={index}
               className="group border-border bg-card hover:border-primary/50 dark:border-border/50 dark:bg-card/50 relative overflow-hidden rounded-xl border p-4 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-6"
             >
-              {/* Subtle gradient accent */}
-              <div className="from-primary/5 absolute inset-0 bg-gradient-to-br via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="from-primary/5 absolute inset-0 bg-linear-to-br via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
               <div className="relative space-y-4">
-                {/* Header with school name */}
                 <div className="space-y-1">
                   <h3 className="text-lg font-semibold tracking-tight">
                     {edu.school}
@@ -58,10 +79,8 @@ export function Experience() {
                   </p>
                 </div>
 
-                {/* Divider */}
                 <div className="bg-border/50 h-px w-full" />
 
-                {/* Footer with period and location */}
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground tabular-nums">
                     {edu.period}

@@ -1,12 +1,14 @@
-import { ArrowRight, FileText } from 'lucide-react'
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right'
+import Download from 'lucide-react/dist/esm/icons/download'
 import { Button } from '@/components/ui/button'
 import { RESUME } from '@/data/resume'
+import profilePhoto from '@/assets/profile_photo.webp'
 
 export function Hero() {
   return (
     <section
       id="hero"
-      className="flex min-h-[auto] flex-col justify-center py-8 sm:py-12 md:min-h-[85vh] md:py-24"
+      className="flex min-h-auto flex-col justify-center py-8 sm:py-12 md:min-h-[85vh] md:py-24"
     >
       {/* Custom animations */}
       <style>{`
@@ -42,7 +44,7 @@ export function Hero() {
         }
       `}</style>
 
-      <div className="flex flex-col-reverse items-center gap-6 sm:gap-8 md:flex-row md:items-start md:gap-16 lg:gap-20">
+      <div className="flex flex-col-reverse items-center gap-6 sm:gap-8 md:flex-row md:items-center md:gap-12 lg:gap-14">
         {/* Text Content */}
         <div className="animate-in fade-in slide-in-from-left-8 flex-1 space-y-3 text-center duration-700 sm:space-y-4 md:space-y-6 md:text-left">
           {/* Greeting with animated waving hand that shrinks */}
@@ -57,7 +59,7 @@ export function Hero() {
 
           {/* Name with gradient effect */}
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-7xl">
-            <span className="from-foreground via-foreground/80 to-foreground bg-gradient-to-r bg-clip-text">
+            <span className="from-foreground via-foreground/80 to-foreground bg-linear-to-r bg-clip-text">
               {RESUME.name}
             </span>
           </h1>
@@ -67,20 +69,21 @@ export function Hero() {
             {RESUME.summary}
           </p>
 
-          {/* About text */}
-          <div className="flex flex-col gap-4">
-            <p className="text-muted-foreground text-md mx-auto max-w-[600px] leading-relaxed sm:text-base md:mx-0 md:text-lg">
+          {/* Tech Stack Pills */}
+          <div className="flex flex-col gap-3">
+            <p className="text-muted-foreground mx-auto max-w-[600px] text-sm font-medium tracking-wider uppercase sm:text-xs md:mx-0">
               Currently shipping with
             </p>
-            {/* Current TechStack with icons */}
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:justify-start">
+            <div className="flex flex-wrap items-center justify-center gap-2 md:justify-start">
               {RESUME.currentTechStack.map((techStack, index) => (
-                <span key={index} className="flex items-center gap-4">
-                  <div>{techStack.icon}</div>
-                  <div className="text-lg font-medium">{techStack.tech}</div>
-                  {index < 3 && (
-                    <div className="h-1.5 w-1.5 rounded-full bg-gray-500"></div>
-                  )}
+                <span
+                  key={index}
+                  className="border-border/60 bg-card/50 dark:bg-card/30 hover:border-primary/40 flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[13px] font-medium backdrop-blur-sm transition-colors sm:px-3 sm:py-1.5 sm:text-sm"
+                >
+                  <span className="flex shrink-0 items-center [&>svg]:h-4 [&>svg]:w-4">
+                    {techStack.icon}
+                  </span>
+                  {techStack.tech}
                 </span>
               ))}
             </div>
@@ -91,21 +94,21 @@ export function Hero() {
             <Button
               asChild
               size="default"
-              className="group h-9 px-4 text-sm font-semibold shadow-lg transition-all duration-300 hover:shadow-xl sm:h-10 sm:px-6 sm:text-base md:h-11 md:px-8"
+              className="group relative h-10 overflow-hidden rounded-full px-6 text-sm font-semibold shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl sm:h-11 sm:px-8 sm:text-base"
             >
               <a href="#projects">
                 View Projects
-                <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1 sm:ml-2 sm:h-5 sm:w-5" />
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
             </Button>
             <Button
               asChild
               variant="outline"
               size="default"
-              className="h-9 px-4 text-sm font-semibold transition-all duration-300 hover:shadow-md sm:h-10 sm:px-6 sm:text-base md:h-11 md:px-8"
+              className="group h-10 rounded-full border-2 px-6 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:h-11 sm:px-8 sm:text-base"
             >
-              <a href="/resume.pdf" target="_blank" rel="noreferrer" hidden>
-                <FileText className="mr-1.5 h-4 w-4 sm:mr-2 sm:h-5 sm:w-5" />
+              <a href="/resume.pdf" target="_blank" rel="noreferrer">
+                <Download className="mr-2 h-4 w-4 transition-transform group-hover:translate-y-0.5" />
                 Resume
               </a>
             </Button>
@@ -113,7 +116,7 @@ export function Hero() {
         </div>
 
         {/* Profile Photo with Clean Geometric Design */}
-        <div className="animate-in fade-in slide-in-from-right-8 relative shrink-0 duration-700">
+        <div className="animate-in fade-in slide-in-from-right-8 relative shrink-0 duration-700 md:-mt-18 md:-ml-4">
           {/* Outer rotating ring with dots - hidden on small mobile, visible from sm up */}
           <div
             className="border-muted-foreground/20 absolute -inset-3 hidden rounded-full border-2 border-dashed sm:-inset-5 sm:block md:-inset-6"
@@ -144,9 +147,9 @@ export function Hero() {
             <div className="border-foreground/20 absolute -inset-1 rounded-full border-2"></div>
 
             {/* Photo - smaller on mobile */}
-            <div className="border-background relative h-24 w-24 overflow-hidden rounded-full border-4 shadow-xl transition-transform duration-500 hover:scale-105 sm:h-32 sm:w-32 md:h-48 md:w-48 lg:h-64 lg:w-64">
+            <div className="border-background relative h-24 w-24 overflow-hidden rounded-full border-4 shadow-xl transition-transform duration-500 hover:scale-105 sm:h-32 sm:w-32 md:h-48 md:w-48 lg:h-56 lg:w-56">
               <img
-                src="/profile_photo.webp"
+                src={profilePhoto}
                 alt={`${RESUME.name}'s profile photo`}
                 className="h-full w-full object-cover object-top"
               />
