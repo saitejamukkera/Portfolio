@@ -3,7 +3,6 @@ import {
   SiDocker,
   SiPostgresql,
   SiAmazonwebservices,
-  SiApachekafka,
   SiReact,
 } from 'react-icons/si'
 import { FaJava } from 'react-icons/fa'

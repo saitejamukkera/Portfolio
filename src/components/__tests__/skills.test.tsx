@@ -48,7 +48,7 @@ describe('Skills', () => {
     const user = userEvent.setup()
     render(<Skills />)
 
-    const allSkillsBefore = screen.getAllByText(
+    screen.getAllByText(
       /^(Java|JavaScript|TypeScript|SQL|Python|Spring Boot|Docker|React|AWS|PostgreSQL|MongoDB|MySQL|Kubernetes|Git|Redis|Mockito|Splunk)$/
     )
 

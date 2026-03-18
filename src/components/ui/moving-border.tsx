@@ -20,9 +20,8 @@ export const MovingBorder = ({
   duration?: number
   rx?: string
   ry?: string
-  [key: string]: any
-}) => {
-  const pathRef = useRef<any>(null)
+} & React.SVGAttributes<SVGSVGElement>) => {
+  const pathRef = useRef<SVGRectElement>(null)
   const progress = useMotionValue<number>(0)
 
   useAnimationFrame((time) => {
