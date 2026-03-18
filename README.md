@@ -49,15 +49,21 @@ npm install
 ### Environment Variables
 
 Create a `.env` file in the project root (see `.env.example`):
+```bash
 cp .env.example .env
-
 ```
+
+```env
 VITE_SUPABASE_URL=your-supabase-project-url
 VITE_SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-key
-VITE_ADMIN_USER_ID=your-supabase-user-id-after-first-login (Used for admin tag)
+VITE_ADMIN_USER_ID=your-supabase-user-id-after-first-login
+VITE_EMAILJS_SERVICE_ID=your-emailjs-service-id
+VITE_EMAILJS_TEMPLATE_ID=your-emailjs-template-id
+VITE_EMAILJS_PUBLIC_KEY=your-emailjs-public-key
 ```
 
-The Supabase variables are required for the Guestbook feature. The app will still run without them, but the Guestbook won't function.
+- **Supabase variables** are required for the Guestbook feature. The app will run without them, but the Guestbook will not function. `VITE_ADMIN_USER_ID` is used to give your own messages an "Admin" badge.
+- **EmailJS variables** are required for the Contact form to send messages directly to your email.
 
 ### Development
 
