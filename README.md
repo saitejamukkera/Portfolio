@@ -1,4 +1,4 @@
-# Sai Teja Mukkera — Portfolio
+# Sai Teja Mukkera's Portfolio
 
 Personal portfolio website built with React, TypeScript, and Tailwind CSS. Features smooth animations, dark/light theme, an interactive guestbook backed by Supabase, and a contact form powered by EmailJS.
 
