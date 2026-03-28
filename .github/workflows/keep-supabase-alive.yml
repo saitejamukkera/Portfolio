@@ -26,7 +26,7 @@ jobs:
 
           echo "Pinging Supabase to keep project alive..."
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
-            "${SUPABASE_URL}/rest/v1/guestbook?select=id&limit=1" \
+            "${SUPABASE_URL}/rest/v1/guestbook_entries?select=id&limit=1" \
             -H "apikey: ${SUPABASE_ANON_KEY}" \
             -H "Authorization: Bearer ${SUPABASE_ANON_KEY}")
 
