@@ -7,5 +7,5 @@ type ThemedImageProps = Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src'> &
 
 export function ThemedImage({ lightSrc, darkSrc, ...props }: ThemedImageProps) {
   const { resolvedTheme } = useTheme()
-  return <img src={resolvedTheme === 'dark' ? darkSrc : lightSrc} {...props} />
+  return <img src={resolvedTheme === 'dark' ? darkSrc : lightSrc} loading="lazy" decoding="async" {...props} />
 }

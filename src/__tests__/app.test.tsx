@@ -1,5 +1,9 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import App from '../App'
+
+vi.mock('@/components/ui/moving-border', () => ({
+  MovingBorder: ({ children }: any) => <div>{children}</div>,
+}))
 
 vi.mock('@/lib/supabase', () => ({
   supabase: {
@@ -47,10 +51,15 @@ describe('App', () => {
     expect(matches.length).toBeGreaterThanOrEqual(2)
   })
 
-  it('renders the home page by default', () => {
+  it('renders the home page by default', async () => {
     render(<App />)
-    expect(screen.getByText('Specializations')).toBeInTheDocument()
-    const expMatches = screen.getAllByText('Experience')
-    expect(expMatches.length).toBeGreaterThanOrEqual(1)
+    await waitFor(
+      () => {
+        expect(screen.getByText('Specializations')).toBeInTheDocument()
+        const expMatches = screen.getAllByText('Experience')
+        expect(expMatches.length).toBeGreaterThanOrEqual(1)
+      },
+      { timeout: 5000 }
+    )
   })
 })

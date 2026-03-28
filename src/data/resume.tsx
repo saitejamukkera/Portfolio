@@ -17,12 +17,12 @@ import {
   trackHireLiveLink,
   twitterLink,
 } from '@/lib/static-links'
-import jobRadarLight from '@/assets/light/Job-Radar.jpg'
-import jobRadarDark from '@/assets/dark/Job-Radar.jpg'
-import portfolioLight from '@/assets/light/portfolio.jpg'
-import portfolioDark from '@/assets/dark/portfolio.jpg'
-import trackHireAiLight from '@/assets/light/Track-Hire-AI.jpg'
-import trackHireAiDark from '@/assets/dark/Track-Hire-AI.jpg'
+import jobRadarLight from '@/assets/light/Job-Radar.webp'
+import jobRadarDark from '@/assets/dark/Job-Radar.webp'
+import portfolioLight from '@/assets/light/portfolio.webp'
+import portfolioDark from '@/assets/dark/portfolio.webp'
+import trackHireAiLight from '@/assets/light/Track-Hire-AI.webp'
+import trackHireAiDark from '@/assets/dark/Track-Hire-AI.webp'
 export const RESUME = {
   name: 'Sai Teja Mukkera',
   about: 'Currently shipping with',

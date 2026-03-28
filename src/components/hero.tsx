@@ -64,7 +64,7 @@ export function Hero() {
           </h1>
 
           {/* Tagline */}
-          <p className="text-shadow-muted font- mx-auto max-w-[600px] text-lg text-zinc-500 md:mx-0 md:text-xl">
+          <p className="text-shadow-muted font- mx-auto max-w-[600px] text-lg text-zinc-400 md:mx-0 md:text-xl">
             {RESUME.summary}
           </p>
 
@@ -151,6 +151,11 @@ export function Hero() {
                 src={profilePhoto}
                 alt={`${RESUME.name}'s profile photo`}
                 className="h-full w-full object-cover object-top"
+                width={224}
+                height={224}
+                fetchPriority="high"
+                loading="eager"
+                decoding="async"
               />
             </div>
 

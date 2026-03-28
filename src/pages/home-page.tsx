@@ -1,10 +1,24 @@
+import { Suspense, lazy } from 'react'
 import { Hero } from '@/components/hero'
-import { Specializations } from '@/components/specializations'
-import { Projects } from '@/components/projects'
-import { Skills } from '@/components/skills'
-import { Experience } from '@/components/experience'
-import { Contact } from '@/components/contact'
 import { useScroll } from '@/context/scroll-context'
+
+const Specializations = lazy(() =>
+  import('@/components/specializations').then((m) => ({
+    default: m.Specializations,
+  }))
+)
+const Projects = lazy(() =>
+  import('@/components/projects').then((m) => ({ default: m.Projects }))
+)
+const Skills = lazy(() =>
+  import('@/components/skills').then((m) => ({ default: m.Skills }))
+)
+const Experience = lazy(() =>
+  import('@/components/experience').then((m) => ({ default: m.Experience }))
+)
+const Contact = lazy(() =>
+  import('@/components/contact').then((m) => ({ default: m.Contact }))
+)
 
 export function HomePage() {
   const { refs } = useScroll()
@@ -14,19 +28,29 @@ export function HomePage() {
       <div ref={refs.hero}>
         <Hero />
       </div>
-      <Specializations />
-      <div ref={refs.projects}>
-        <Projects />
-      </div>
-      <div ref={refs.skills}>
-        <Skills />
-      </div>
-      <div ref={refs.experience}>
-        <Experience />
-      </div>
-      <div ref={refs.contact}>
-        <Contact />
-      </div>
+      <Suspense fallback={null}>
+        <Specializations />
+      </Suspense>
+      <Suspense fallback={null}>
+        <div ref={refs.projects}>
+          <Projects />
+        </div>
+      </Suspense>
+      <Suspense fallback={null}>
+        <div ref={refs.skills}>
+          <Skills />
+        </div>
+      </Suspense>
+      <Suspense fallback={null}>
+        <div ref={refs.experience}>
+          <Experience />
+        </div>
+      </Suspense>
+      <Suspense fallback={null}>
+        <div ref={refs.contact}>
+          <Contact />
+        </div>
+      </Suspense>
     </main>
   )
 }
