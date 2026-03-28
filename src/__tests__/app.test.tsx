@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import App from '../App'
 
 vi.mock('@/components/ui/moving-border', () => ({
-  MovingBorder: ({ children }: any) => <div>{children}</div>,
+  MovingBorder: ({ children }: { children?: React.ReactNode }) => <div>{children}</div>,
 }))
 
 vi.mock('@/lib/supabase', () => ({

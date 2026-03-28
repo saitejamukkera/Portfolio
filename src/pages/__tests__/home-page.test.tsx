@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '../../__tests__/test-utils'
 import { HomePage } from '../home-page'
 
 vi.mock('@/components/ui/moving-border', () => ({
-  MovingBorder: ({ children }: any) => <div>{children}</div>,
+  MovingBorder: ({ children }: { children?: React.ReactNode }) => <div>{children}</div>,
 }))
 
 describe('HomePage', () => {
